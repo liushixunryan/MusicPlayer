@@ -39,7 +39,7 @@ public class MusicPlayerService extends Service implements SensorEventListener {
     //通过bind 返回一个IBinder对象，然后改对象调用里面的方法实现参数的传递
     @Override
     public IBinder onBind(Intent intent) {
-        Log.i(TAG,"onBind......");
+      //  Log.i(TAG,"onBind......");
         return musicbinder;
     }
 

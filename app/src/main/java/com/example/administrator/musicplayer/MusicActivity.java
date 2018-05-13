@@ -52,7 +52,7 @@ public class MusicActivity extends AppCompatActivity {
     private boolean isservicerunning = false;//退出应用再进入时（点击app图标或者在通知栏点击service）使用，判断服务是否在启动
     private SingleMusicInfo singleMusicInfo = null;//音乐的详细信息
     private boolean isExit = false;//返回键
-    //private float mLastY = -1;// 标记上下滑动时上次滑动位置,滑动隐藏上下标题栏
+    private float mLastY = -1;// 标记上下滑动时上次滑动位置,滑动隐藏上下标题栏
     private RelativeLayout musictop,musicbotom;
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor editor;//保存播放模式
@@ -101,11 +101,11 @@ public class MusicActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent shareIntent = new Intent();
-//                shareIntent.setAction(Intent.ACTION_SEND);
-//                shareIntent.setType("text/plain");
-//                //设置分享列表
-//                startActivity(Intent.createChooser(shareIntent,"分享到"));
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                //设置分享列表
+                startActivity(Intent.createChooser(shareIntent,"分享到"));
             }
         });
 
@@ -132,45 +132,45 @@ public class MusicActivity extends AppCompatActivity {
             }
         });
         //上下滚动时
-//        musicListView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//
-//                if (mLastY == -1) {
-//                    mLastY = event.getRawY();
-//                }
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_MOVE:
-//                        //判断上滑还是下滑
-//                        if (event.getRawY() > mLastY) {
-//                            //下滑显示bottom，隐藏top
-//                            musictop.setVisibility(View.GONE);
-//                            musicbotom.setVisibility(View.VISIBLE);
-//                        } else if (event.getRawY() < mLastY) {
-//                            //上滑，显示top，隐藏bottom
-//                            musictop.setVisibility(View.VISIBLE);
-////                            musicbotom.setVisibility(View.INVISIBLE);
-//                            musicbotom.setVisibility(View.GONE);
-//
-//                        } else {
-//                            // deltaY = 0.0 时
-//                            musictop.setVisibility(View.VISIBLE);
-//                            musicbotom.setVisibility(View.VISIBLE);
-//                            mLastY = event.getRawY();
-//                            return false;//返回false即可响应click事件
-//                        }
-//                        mLastY = event.getRawY();
-//                        break;
-//                    default:
-//                        // reset
-//                        mLastY = -1;
-//                        musictop.setVisibility(View.VISIBLE);
-//                        musicbotom.setVisibility(View.VISIBLE);
-//                        break;
-//                }
-//                return false;
-//            }
-//        });
+        musicListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (mLastY == -1) {
+                    mLastY = event.getRawY();
+                }
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        //判断上滑还是下滑
+                        if (event.getRawY() > mLastY) {
+                            //下滑显示bottom，隐藏top
+                            musictop.setVisibility(View.GONE);
+                            musicbotom.setVisibility(View.VISIBLE);
+                        } else if (event.getRawY() < mLastY) {
+                            //上滑，显示top，隐藏bottom
+                            musictop.setVisibility(View.VISIBLE);
+                            musicbotom.setVisibility(View.INVISIBLE);
+                            musicbotom.setVisibility(View.GONE);
+
+                        } else {
+                            // deltaY = 0.0 时
+                            musictop.setVisibility(View.VISIBLE);
+                            musicbotom.setVisibility(View.VISIBLE);
+                            mLastY = event.getRawY();
+                            return false;//返回false即可响应click事件
+                        }
+                        mLastY = event.getRawY();
+                        break;
+                    default:
+                        // reset
+                        mLastY = -1;
+                        musictop.setVisibility(View.VISIBLE);
+                        musicbotom.setVisibility(View.VISIBLE);
+                        break;
+                }
+                return false;
+            }
+        });
 
         musicList  = scanAllAudioFiles();
         //这里其实可以直接在扫描时返回 ArrayList<Map<String, Object>>()
@@ -265,17 +265,15 @@ public class MusicActivity extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Log.i("MusicPlayerService", "MusicActivity...textView.setOnClickListener;.........");
-//                if (textView.getText().length() > 0) {
-//                    singleMusicInfo = new SingleMusicInfo(MusicActivity.this,listems.get(musicPlayerService.getCurposition()));
-//                    //显示窗口
-//                    singleMusicInfo.showAtLocation(MusicActivity.this.findViewById(R.id.contentmusic), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
-//                }
+                Log.i("MusicPlayerService", "MusicActivity...textView.setOnClickListener;.........");
+                if (textView.getText().length() > 0) {
+                    singleMusicInfo = new SingleMusicInfo(MusicActivity.this,listems.get(musicPlayerService.getCurposition()));
+                    //显示窗口
+                    singleMusicInfo.showAtLocation(MusicActivity.this.findViewById(R.id.contentmusic), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+                }
             }
 
         });
-        //Log.i("MusicPlayerService", "MusicActivity...init done;.........");
-
     }
 
     private void reinit() {
@@ -454,8 +452,6 @@ public class MusicActivity extends AppCompatActivity {
     static Runnable seekBarHandler = new Runnable() {
         @Override
         public void run() {
-
-            Log.i("MusicPlayerService", "seekBarHandler run......."+musicPlayerService.getDuration()+" "+musicPlayerService.getCurrentPosition());
             audioSeekBar.setMax(musicPlayerService.getDuration());
             audioSeekBar.setProgress(musicPlayerService.getCurrentPosition());
             textView.setText( musicPlayerService.getMusicMedia().getTitle()+
@@ -535,35 +531,35 @@ public class MusicActivity extends AppCompatActivity {
 //        unbindService(conn);
         Log.i("MusicPlayerService", "MusicActivity...onDestroy........." + Thread.currentThread().hashCode());
     }
-//    private void exit(String info) {
-//        if(!isExit) {
-//            isExit = true;
-//            Toast.makeText(this, info, Toast.LENGTH_SHORT).show();
-//            new Timer().schedule(new TimerTask() {
-//                @Override
-//                public void run() {
-//                    isExit = false;
-//                }
-//            }, 2000);
-//        } else {
-//            finish();
-//        }
-//    }
+    private void exit(String info) {
+        if(!isExit) {
+            isExit = true;
+            Toast.makeText(this, info, Toast.LENGTH_SHORT).show();
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false;
+                }
+            }, 2000);
+        } else {
+            finish();
+        }
+    }
     //按两次返回键退出
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK
-//                && event.getRepeatCount() == 0) {
-//            //音乐服务启动了，隐藏至通知栏
-//            if(musicPlayerService != null){
-//                exit("再按一次隐藏至通知栏");
-//            }else{
-//                exit("再按一次退出程序");
-//            }
-//
-//        }
-//        return false;
-//    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            //音乐服务启动了，隐藏至通知栏
+            if(musicPlayerService != null){
+                exit("再按一次隐藏至通知栏");
+            }else{
+                exit("再按一次退出程序");
+            }
+
+        }
+        return false;
+    }
 
     //修改播放模式  单曲循环 随机播放 顺序播放
     int clicktimes = 0;

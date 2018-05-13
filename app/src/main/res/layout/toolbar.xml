@@ -13,15 +13,14 @@
         android:id="@+id/textView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
     <ImageView
         android:id="@+id/click_share"
-        android:onClick="clickShare"
         android:layout_width="20dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/share"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="29dp"
-        android:layout_marginEnd="29dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="clickShare"
+        android:src="@drawable/share" />
 </RelativeLayout>
