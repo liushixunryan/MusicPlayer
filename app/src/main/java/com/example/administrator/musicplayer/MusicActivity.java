@@ -476,7 +476,6 @@ public class MusicActivity extends AppCompatActivity {
     *  0  未播放--->播放
     *  1    播放--->暂停
     *  2    暂停--->继续播放
-    *
     * */
     private void pause() {
         intent.putExtra("MSG","1");

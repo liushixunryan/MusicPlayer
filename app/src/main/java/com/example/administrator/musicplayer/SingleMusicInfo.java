@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2018/5/7.
- */
 
 public class SingleMusicInfo extends PopupWindow {
     private View view;
